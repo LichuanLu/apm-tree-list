@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`component dist files exports modules correctly 1`] = `
+Array [
+  "TreeList",
+  "TreeListUtils",
+  "TreeSelector",
+  "TreeSelectorItem",
+]
+`;

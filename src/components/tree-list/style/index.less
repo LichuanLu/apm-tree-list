@@ -1,0 +1,72 @@
+@treeListPrefixCls: amp-tree-list;
+@treeSelectorPrefixCls: amp-tree-selector;
+@itemPrefixCls: amp-tree-selector-item;
+
+@theme-color: #272727;
+@theme-font-color: #fff;
+
+.@{treeListPrefixCls} {
+  height: 100%;
+  background-color: @theme-color;
+  position: relative;
+  &-view {
+    height: 100%;
+  }
+  .am-navbar {
+    background-color: @theme-color;
+    height: 80px;
+    border-bottom: 1px solid;
+  }
+  .am-navbar-title {
+    font-size: 25px;
+  }
+  .am-navbar-left {
+    font-size: 25px;
+  }
+  .am-list-footer {
+    margin-top: 50px;
+    text-align: center;
+  }
+}
+
+.@{treeSelectorPrefixCls} {
+  .dovs {
+    margin-right: 20px;
+    color: @theme-font-color;
+  }
+  .dovs1 {
+    margin-top: 25px;
+  }
+}
+
+.@{itemPrefixCls} {
+  background-color: @theme-color;
+  &-checkbox {
+    position: relative;
+  }
+  &-checkbox:after {
+    content: '';
+    position: absolute;
+    top: -15px;
+    bottom: -15px;
+    left: -15px;
+    right: -30px;
+  }
+  .next-level-btn {
+    background-color: @theme-color;
+    color: @theme-font-color;
+    border: none;
+    font-size: 25px;
+    height: 50px;
+    &.am-button-ghost::before {
+      border: none;
+    }
+    &.am-button-ghost.am-button-active::before {
+      border-color: @theme-font-color;
+    }
+  }
+  .am-list-line .am-list-content {
+    color: @theme-font-color;
+  }
+}
+

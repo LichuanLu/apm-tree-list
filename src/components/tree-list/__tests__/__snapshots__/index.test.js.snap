@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TreeList renders correctly 1`] = `
+<div
+  class="amp-tree-list"
+>
+  <div
+    class="am-navbar am-navbar-dark"
+  >
+    <div
+      class="am-navbar-left"
+      role="button"
+    >
+      根节点
+    </div>
+    <div
+      class="am-navbar-title"
+    >
+      
+    </div>
+    <div
+      class="am-navbar-right"
+    >
+      
+    </div>
+  </div>
+  <div
+    class="amp-tree-list-view am-list-view-scrollview"
+    style="position:relative;overflow:auto;-webkit-overflow-scrolling:touch;flex:1"
+  >
+    <div
+      class="am-list-view-scrollview-content am-list"
+      style="position:absolute;min-width:100%"
+    >
+      <div
+        class="am-list-body"
+      >
+        
+      </div>
+      <div
+        class="am-list-footer"
+      >
+        <span>
+          没有更多数据了
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;

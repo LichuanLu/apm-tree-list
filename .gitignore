@@ -36,6 +36,7 @@ node_modules/
 lib/
 es/
 dist/
+storybook-out/
 
 # gh-pages
 _gh-pages

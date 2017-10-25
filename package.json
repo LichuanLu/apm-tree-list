@@ -7,7 +7,7 @@
     "react-component",
     "apollo-mobile-tree-list"
   ],
-  "author": "Someone <xx@xx.com>",
+  "author": "lulichuan <lulichuan@cmbc.com.cn>",
   "main": "index.js",
   "scripts": {
     "dist:webpack": "cross-env RUN_ENV=PRODUCTION ap-tool run webpack",
@@ -21,7 +21,8 @@
     "stylelint": "ap-tool run style-lint",
     "stylelint-fix": "ap-tool run style-lint-fix",
     "clean": "ap-tool run clean",
-    "lint": "npm run tslint && npm run eslint && npm run stylelint"
+    "lint": "npm run tslint && npm run eslint && npm run stylelint",
+    "pub": "snpm run build && snpm publish"
   },
   "repository": {
     "type": "git",
@@ -42,7 +43,7 @@
     "@types/react": "~16.0.2",
     "@types/react-dom": "15.5.1",
     "@types/react-native": "^0.47.2",
-    "ap-tool": "git+https://git.coding.net/liclu/ap-tool.git",
+    "ap-tool": "^0.9.0",
     "autoprefixer": "^7.1.4",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",

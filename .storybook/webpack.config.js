@@ -1,6 +1,6 @@
 const path = require('path');
-const babelConfig = require('../scripts/getBabelCommonConfig')('commonjs');
-const postCssConfig = require('../scripts/postcssConfig');
+const babelConfig = require('../node_modules/ap-tool/lib/getBabelCommonConfig')('commonjs');
+const postCssConfig = require('../node_modules/ap-tool/lib/postcssConfig');
 
 babelConfig.plugins.push([require.resolve('babel-plugin-import'), {
   libraryName: 'antd-mobile',

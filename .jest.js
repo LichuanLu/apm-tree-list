@@ -21,8 +21,8 @@ module.exports = {
     '/node_modules/'
   ],
   transform: {
-    '\\.tsx?$': './scripts/jest/codePreprocessor',
-    '\\.js$': './scripts/jest/codePreprocessor'
+    '\\.tsx?$': './node_modules/ap-tool/lib/jest/codePreprocessor',
+    '\\.js$': './node_modules/ap-tool/lib/jest/codePreprocessor'
   },
   testRegex: libDir === 'dist' ? 'demo\\.test\\.js$' : '.*\\.test\\.js$',
   collectCoverageFrom: [

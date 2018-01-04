@@ -1,17 +1,25 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
+import axios from 'axios';
 import mockData from './mockData'
 
 import { TreeList } from '../../index';
 import '../style/index';
 
-
 const { rootNode, firstLevel, secondLevel } = mockData
 
-const fetchChildren = id => Promise.resolve(
+// local mock data
+const fetchLocalChildren = id => Promise.resolve(
   id === 'root' ? firstLevel : secondLevel,
 )
+
+// fetch from server , 需要配置storybook middleware
+const fetchChildren = (id) => {
+  return axios.get(`/api/children?ID=${id}`).then((res) => {
+    return res.data
+  })
+}
 
 
 class TreeListWrapper extends React.Component {

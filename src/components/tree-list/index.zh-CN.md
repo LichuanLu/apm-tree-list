@@ -8,7 +8,7 @@
 
 #### 依赖:
 
-antd-mobile 2.x
+antd-mobile 2.x, React 16
 
 ## API
 

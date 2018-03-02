@@ -7,6 +7,11 @@ babelConfig.plugins.push([require.resolve('babel-plugin-import'), {
   libraryDirectory: 'lib',
   //use less will cause error
   style: 'css',
+},{
+  libraryName: 'antd',
+  libraryDirectory: 'lib',
+  //use less will cause error
+  style: 'css',
 }]);
 
 

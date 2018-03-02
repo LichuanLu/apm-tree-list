@@ -24,7 +24,10 @@ module.exports = {
     '\\.tsx?$': './node_modules/ap-tool/lib/jest/codePreprocessor',
     '\\.js$': './node_modules/ap-tool/lib/jest/codePreprocessor'
   },
-  testRegex: libDir === 'dist' ? 'demo\\.test\\.js$' : '.*\\.test\\.js$',
+  testRegex: libDir === 'dist' ? 'demo\\.spec\\.js$' : '.*\\.spec\\.js$',
+  // 覆盖率
+  collectCoverage: true,
+  coverageFormats: ["json", "html"],
   collectCoverageFrom: [
     'src/components/**/*.{ts,tsx}',
     '!src/components/**/*.native.{ts,tsx}',
@@ -32,5 +35,6 @@ module.exports = {
   ],
   transformIgnorePatterns,
   testEnvironment: 'jsdom',
-  moduleNameMapper: { "\\.(css|less)$": "<rootDir>/tests/styleMock.js" }
+  // 替换文件，把样式文件替换成mock
+  moduleNameMapper: { "\\.(css|less)$": "<rootDir>/tests/mock/styleMock.js" }
 };

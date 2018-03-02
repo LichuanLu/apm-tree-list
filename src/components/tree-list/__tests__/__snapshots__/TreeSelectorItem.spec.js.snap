@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TreeSelectorItem render render mock data correctly 1`] = `
+<div
+  class="am-list-item amp-tree-selector-item am-list-item-middle"
+>
+  <div
+    class="am-list-line"
+  >
+    <div
+      class="am-list-content"
+    >
+      <div
+        class="am-flexbox am-flexbox-justify-between am-flexbox-align-center"
+      >
+        <span>
+          TreeSelectorItem text
+        </span>
+        <a
+          aria-disabled="false"
+          class="am-button next-level-btn am-button-ghost am-button-inline am-button-icon"
+          role="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="am-button-icon am-icon am-icon-right am-icon-md"
+          >
+            <use
+              href="#right"
+            >
+              
+            </use>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div
+    class="am-list-ripple"
+    style="display:none"
+  >
+    
+  </div>
+</div>
+`;

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TreeList renders correctly 1`] = `
+exports[`TreeList render render mock data correctly 1`] = `
 <div
   class="amp-tree-list"
 >
@@ -26,7 +26,7 @@ exports[`TreeList renders correctly 1`] = `
   </div>
   <div
     class="amp-tree-list-view am-list-view-scrollview"
-    style="position:relative;overflow:auto;-webkit-overflow-scrolling:touch;flex:1"
+    style="position:relative;overflow:auto;-webkit-overflow-scrolling:touch"
   >
     <div
       class="am-list-view-scrollview-content am-list"

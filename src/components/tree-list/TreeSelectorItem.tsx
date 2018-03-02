@@ -10,7 +10,7 @@ import { List, Flex, Button, Checkbox } from 'antd-mobile'
 
 import { TreeSelectorItemProps as TreeSelectorItemPropsType } from './PropsType'
 
-const { Item } = List
+const Item = List.Item
 
 const isDataInSelItem = (data, selItem) => {
   if (!(data && selItem && selItem.length > 0)) {

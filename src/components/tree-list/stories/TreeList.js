@@ -1,39 +1,34 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
-import { withInfo } from '@storybook/addon-info';
+import {storiesOf} from '@storybook/react';
+import {withInfo} from '@storybook/addon-info';
 import axios from 'axios';
-import mockData from './mockData'
+import mockData from './mockData';
 
-import { TreeList } from '../../index';
+import {TreeList} from '../../index';
 import '../style/index';
 
-const { rootNode, firstLevel, secondLevel } = mockData
+const {rootNode, firstLevel, secondLevel} = mockData;
 
 // local mock data
-const fetchLocalChildren = id => Promise.resolve(
-  id === 'root' ? firstLevel : secondLevel,
-)
+const fetchLocalChildren = id =>
+  Promise.resolve(id === 'root' ? firstLevel : secondLevel);
 
 // fetch from server , 需要配置storybook middleware
-const fetchChildren = (id) => {
-  return axios.get(`/api/children?ID=${id}`).then((res) => {
-    return res.data
-  })
-}
-
+const fetchChildren = id =>
+  axios.get(`/api/children?ID=${id}`).then(res => res.data);
 
 class TreeListWrapper extends React.Component {
   constructor() {
-    super()
+    super();
     this.state = {
       value: [],
-    }
+    };
   }
-  onChange = (value) => {
-    this.setState({ value })
-  }
+  onChange = value => {
+    this.setState({value});
+  };
   render() {
-    const { value } = this.state
+    const {value} = this.state;
     return (
       <TreeList
         current={rootNode}
@@ -42,17 +37,26 @@ class TreeListWrapper extends React.Component {
         showSelect
         onChange={this.onChange}
       />
-    )
+    );
   }
 }
 
-
 storiesOf('TreeList', module)
-  .add('three level tree list', withInfo({
-    // text: 'three level tree list ',
-  })(() => <TreeList current={rootNode} fetchChildren={fetchChildren} showSelect={false} />),
+  .add(
+    'three level tree list',
+    withInfo({
+      // text: 'three level tree list ',
+    })(() => (
+      <TreeList
+        current={rootNode}
+        fetchChildren={fetchChildren}
+        showSelect={false}
+      />
+    )),
   )
-  .add('with select', withInfo({
-    // text: 'with select',
-  })(() => <TreeListWrapper />),
+  .add(
+    'with select',
+    withInfo({
+      // text: 'with select',
+    })(() => <TreeListWrapper />),
   );

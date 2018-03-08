@@ -72,17 +72,28 @@
 
  */
 
-import React from 'react'
-import ClassNames from 'classnames'
-import { EventEmitter } from 'fbemitter'
-import { ListView, NavBar } from 'antd-mobile'
-import { initTreeLevelStack, updateTreeMap, initDataSourceCloneWithRows, convertListToMap,
-  filterFromArray }from './TreeListUtils'
-import TreeSelectorItem from './TreeSelectorItem'
-import { TreeListProps as TreeListPropsType, TreeNodeProps as TreeNodePropsType } from './PropsType'
+import React from 'react';
+import ClassNames from 'classnames';
+import {EventEmitter} from 'fbemitter';
+import {ListView, NavBar} from 'antd-mobile';
+import {
+  initTreeLevelStack,
+  updateTreeMap,
+  initDataSourceCloneWithRows,
+  convertListToMap,
+  filterFromArray,
+} from './TreeListUtils';
+import TreeSelectorItem from './TreeSelectorItem';
+import {
+  TreeListProps as TreeListPropsType,
+  TreeNodeProps as TreeNodePropsType,
+} from './PropsType';
 
 // TODO: 可以考虑实现一个showSelect的属性来关闭select
-export default class TreeList extends React.PureComponent<TreeListPropsType, any> {
+export default class TreeList extends React.PureComponent<
+  TreeListPropsType,
+  any
+> {
   static defaultProps: Partial<TreeListPropsType> = {
     prefixCls: 'amp-tree-list',
     current: {
@@ -94,42 +105,42 @@ export default class TreeList extends React.PureComponent<TreeListPropsType, any
     showSelect: true,
     storageKeyPrefix: '',
     initialListSize: 200,
-  }
+  };
 
-  emitter: EventEmitter
+  emitter: EventEmitter;
   treeMap: {
     [id: string]: TreeNodePropsType,
-  }
+  };
 
   constructor(props) {
-    super(props)
-    const { current } = props
+    super(props);
+    const {current} = props;
     // 注入新的current到treeMap
-    this.initTreeMap(current)
+    this.initTreeMap(current);
     this.state = {
       loading: false,
       current,
       treeLevelStack: initTreeLevelStack(current, this.treeMap),
       listData: initDataSourceCloneWithRows(current, this.treeMap),
-    }
-    this.emitter = new EventEmitter()
+    };
+    this.emitter = new EventEmitter();
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.current !== this.props.current) {
-      this.initTreeMap(nextProps.current)
+      this.initTreeMap(nextProps.current);
       this.setState({
         current: nextProps.current,
         treeLevelStack: initTreeLevelStack(nextProps.current, this.treeMap),
         listData: initDataSourceCloneWithRows(nextProps.current, this.treeMap),
-      })
+      });
     }
   }
 
   initTreeMap(current) {
-    const temp = {}
-    temp[current.id] = current
-    this.treeMap = updateTreeMap(temp)
+    const temp = {};
+    temp[current.id] = current;
+    this.treeMap = updateTreeMap(temp);
   }
 
   // shouldComponentUpdate(nextProps, nextState){
@@ -142,95 +153,100 @@ export default class TreeList extends React.PureComponent<TreeListPropsType, any
 
   fetchAndUpdateCurrent() {
     // fetchChildren, 建议异步fetch实现 toast loading
-    const { current } = this.state
-    const { fetchChildren } = this.props
+    const {current} = this.state;
+    const {fetchChildren} = this.props;
     if (current.children === true) {
-        const fetchPromise = fetchChildren ? fetchChildren(current.id) : Promise.resolve()
-        fetchPromise.then((list) => {
+      const fetchPromise = fetchChildren
+        ? fetchChildren(current.id)
+        : Promise.resolve();
+      fetchPromise.then(list => {
         if (list && list.length > 0) {
-          const newMap = convertListToMap(list)
+          const newMap = convertListToMap(list);
           // update current
-          current.children = Object.keys(newMap)
-          newMap[current.id] = current
+          current.children = Object.keys(newMap);
+          newMap[current.id] = current;
           // merge to treeMap
-          this.treeMap = updateTreeMap(newMap)
+          this.treeMap = updateTreeMap(newMap);
           // 重置状态，触发渲染
           this.setState({
             current,
             listData: initDataSourceCloneWithRows(current, this.treeMap),
-          })
+          });
         }
-      })
+      });
     }
   }
 
   componentDidMount() {
     // 渲染对应的选中item
-    this.emitter.emit('selEvent', this.props.value)
-    this.fetchAndUpdateCurrent()
+    this.emitter.emit('selEvent', this.props.value);
+    this.fetchAndUpdateCurrent();
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { value } = this.props
+    const {value} = this.props;
     // 渲染对应的选中item
-    if (prevProps.value !== value || prevState.listData !== this.state.listData) {
-      this.emitter.emit('selEvent', value)
+    if (
+      prevProps.value !== value ||
+      prevState.listData !== this.state.listData
+    ) {
+      this.emitter.emit('selEvent', value);
     }
-    this.fetchAndUpdateCurrent()
+    this.fetchAndUpdateCurrent();
   }
 
   componentWillUnmount() {
-    this.emitter.removeAllListeners()
+    this.emitter.removeAllListeners();
   }
 
   // 选择Radio
   onChange(rowID) {
-    const { value = [], multipleSelect, onChange } = this.props
-    let result: Array<TreeNodePropsType> = []
+    const {value = [], multipleSelect, onChange} = this.props;
+    let result: Array<TreeNodePropsType> = [];
     // 先删除已有的
-    result = filterFromArray(value, val => (val.id !== rowID))
+    result = filterFromArray(value, val => val.id !== rowID);
     if (result.length === value.length) {
       if (!multipleSelect) {
         // 单选需要清空result
-        result = []
+        result = [];
       }
-      result.push(this.treeMap[rowID])
+      result.push(this.treeMap[rowID]);
     }
     if (onChange) {
-      onChange(result)
+      onChange(result);
     }
   }
 
   // 指定id的children level
   toChildLevel(id) {
-    const { treeLevelStack } = this.state
-    const newCurrent = this.treeMap[id]
-    treeLevelStack.push(newCurrent.id)
+    const {treeLevelStack} = this.state;
+    const newCurrent = this.treeMap[id];
+    treeLevelStack.push(newCurrent.id);
     this.setState({
       current: newCurrent,
       listData: initDataSourceCloneWithRows(newCurrent, this.treeMap),
-    })
+    });
   }
 
   // 返回上层
   backToPrevLevel() {
-    const { current, treeLevelStack } = this.state
-    treeLevelStack.pop()
+    const {current, treeLevelStack} = this.state;
+    treeLevelStack.pop();
     if (current.parent && this.treeMap[current.parent]) {
-      const newCurrent = this.treeMap[current.parent]
+      const newCurrent = this.treeMap[current.parent];
       this.setState({
         current: newCurrent,
         listData: initDataSourceCloneWithRows(newCurrent, this.treeMap),
-      })
+      });
     } else if (this.treeMap.root) {
-      const newCurrent = this.treeMap.root
+      const newCurrent = this.treeMap.root;
       this.setState({
         current: newCurrent,
         treeLevelStack: ['root'],
         listData: initDataSourceCloneWithRows(newCurrent, this.treeMap),
-      })
+      });
     } else {
-      alert('回退错误, 数据异常，请刷新页面')
+      alert('回退错误, 数据异常，请刷新页面');
     }
   }
 
@@ -241,24 +257,25 @@ export default class TreeList extends React.PureComponent<TreeListPropsType, any
         <NavBar
           leftContent={<span>上一级</span>}
           mode="dark"
-          onLeftClick={() => this.backToPrevLevel()}
-        >{current.label}
+          onLeftClick={() => this.backToPrevLevel()}>
+          {current.label}
         </NavBar>
-      )
+      );
     }
-    return (
-      <NavBar
-        mode="dark"
-        iconName={null}
-        leftContent={current.label}
-      />
-    )
+    return <NavBar mode="dark" iconName={null} leftContent={current.label} />;
   }
 
   render() {
-    const { prefixCls, showSelect, showDelay, initialListSize, className, style } = this.props
-    const { current, treeLevelStack, listData } = this.state
-    const wrapCls = ClassNames(prefixCls, className)
+    const {
+      prefixCls,
+      showSelect,
+      showDelay,
+      initialListSize,
+      className,
+      style,
+    } = this.props;
+    const {current, treeLevelStack, listData} = this.state;
+    const wrapCls = ClassNames(prefixCls, className);
     return (
       <div className={wrapCls} style={style}>
         {this.getBreadcrumbView(treeLevelStack, current)}
@@ -279,6 +296,6 @@ export default class TreeList extends React.PureComponent<TreeListPropsType, any
           delayTime={showDelay ? 500 : 0}
         />
       </div>
-    )
+    );
   }
 }

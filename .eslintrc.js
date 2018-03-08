@@ -1,7 +1,7 @@
 'use strict';
 
 const eslintrc = {
-  extends: ['eslint-config-airbnb'],
+  extends: ['eslint-config-airbnb','plugin:prettier/recommended'],
   env: {
     browser: true,
     node: true,

@@ -1,4 +1,4 @@
-import { EventEmitter } from 'fbemitter'
+import {EventEmitter} from 'fbemitter';
 
 export interface TreeNodeProps {
   id: string;

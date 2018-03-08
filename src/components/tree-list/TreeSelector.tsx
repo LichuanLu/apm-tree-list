@@ -71,18 +71,20 @@
  5.  每次需要渲染时发现node.children是数组，可以检查一下数组是否为空，或者里面的id是否都在treeMap,否则置为true，重新fetchChildren
 
  */
-import React from 'react'
-import ClassNames from 'classnames'
-import { List, Modal, Button, Flex, Icon } from 'antd-mobile'
-import { TreeSelectorProps as TreeSelectorPropsType } from './PropsType'
-import TreeList from './TreeList'
+import React from 'react';
+import ClassNames from 'classnames';
+import {List, Modal, Button, Flex, Icon} from 'antd-mobile';
+import {TreeSelectorProps as TreeSelectorPropsType} from './PropsType';
+import TreeList from './TreeList';
 
-import { isIOS } from './TreeListUtils'
+import {isIOS} from './TreeListUtils';
 
 const Item = List.Item;
 
-export default class TreeSelector extends React.PureComponent<TreeSelectorPropsType, any> {
-
+export default class TreeSelector extends React.PureComponent<
+  TreeSelectorPropsType,
+  any
+> {
   static defaultProps: Partial<TreeSelectorPropsType> = {
     prefixCls: 'amp-tree-selector',
     current: {
@@ -91,85 +93,103 @@ export default class TreeSelector extends React.PureComponent<TreeSelectorPropsT
       children: false,
     },
     value: [],
-  }
+  };
 
   constructor(props) {
-    super(props)
-    const { value } = props
+    super(props);
+    const {value} = props;
     this.state = {
       showTreeListModal: false,
       value,
-    }
+    };
   }
 
   openModal = () => {
     this.setState({
       showTreeListModal: true,
-    })
-  }
+    });
+  };
 
   confirmModal = () => {
-    const { onChange } = this.props
+    const {onChange} = this.props;
     this.setState({
       showTreeListModal: false,
-    })
+    });
     // 确定才回调外层onChange
     if (onChange) {
-      onChange(this.state.value)
+      onChange(this.state.value);
     }
-  }
+  };
 
   closeModal = () => {
     this.setState({
       showTreeListModal: false,
       value: this.props.value,
-    })
-  }
+    });
+  };
 
-  onChange = (value) => {
+  onChange = value => {
     if (value !== this.state.value) {
       this.setState({
         value,
-      })
+      });
     }
-  }
+  };
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.value !== this.state.value) {
       this.setState({
         value: nextProps.value,
-      })
+      });
     }
   }
 
   render() {
-    const { value } = this.state
-    const { current, fetchChildren, storageKeyPrefix, multipleSelect, style, prefixCls, className } = this.props
-    const wrapCls = ClassNames(prefixCls, className)
+    const {value} = this.state;
+    const {
+      current,
+      fetchChildren,
+      storageKeyPrefix,
+      multipleSelect,
+      style,
+      prefixCls,
+      className,
+    } = this.props;
+    const wrapCls = ClassNames(prefixCls, className);
     return (
       <div className={wrapCls} style={style}>
         {/* <Item extra="点击切换" arrow="down" onClick={this.openModal}>{value[0]? value[0].label : '请选择'}</Item> */}
-        <div style={{ display: 'flex' }} onClick={this.openModal}>
-          <Item style={{ width: '90%' }} extra={value[0] ? value[0].label : '请选择'}>组织机构</Item>
-          <div style={{ width: '10%' }}>
-            <span className="dovs"><Icon type="right" className="dovs1" /></span>
+        <div style={{display: 'flex'}} onClick={this.openModal}>
+          <Item
+            style={{width: '90%'}}
+            extra={value[0] ? value[0].label : '请选择'}>
+            组织机构
+          </Item>
+          <div style={{width: '10%'}}>
+            <span className="dovs">
+              <Icon type="right" className="dovs1" />
+            </span>
           </div>
         </div>
         <Modal
           visible={this.state.showTreeListModal}
-          className="amp-full-selector-modal"
-        >
+          className="amp-full-selector-modal">
           <div
-            className={
-            ClassNames({
+            className={ClassNames({
               'modal-title': true,
               'ios-modal-title': isIOS(),
-            })
-          }
-          >
+            })}>
             <Flex justify="end">
-              <Flex.Item><Button className="but" onClick={this.closeModal}>取消</Button></Flex.Item>
-              <Flex.Item><Button className="but" onClick={this.confirmModal}>确定</Button></Flex.Item>
+              <Flex.Item>
+                <Button className="but" onClick={this.closeModal}>
+                  取消
+                </Button>
+              </Flex.Item>
+              <Flex.Item>
+                <Button className="but" onClick={this.confirmModal}>
+                  确定
+                </Button>
+              </Flex.Item>
             </Flex>
           </div>
           <TreeList
@@ -177,7 +197,9 @@ export default class TreeSelector extends React.PureComponent<TreeSelectorPropsT
             fetchChildren={fetchChildren}
             storageKeyPrefix={storageKeyPrefix}
             value={value}
-            onChange={(val) => { this.onChange(val) }}
+            onChange={val => {
+              this.onChange(val);
+            }}
             showSelect
             multipleSelect={multipleSelect}
           />
